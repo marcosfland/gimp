@@ -70,200 +70,37 @@
     },
     "modules": [
         {
-            "name": "appstream-glib",
-            "buildsystem": "meson",
+            "name": "aalib",
             "config-opts": [
-                "-Drpm=false",
-                "-Dfonts=false",
-                "-Ddep11=false",
-                "-Dbuilder=false",
-                "-Dman=false",
-                "-Dintrospection=false"
+                "--disable-static",
+                "--with-slang-driver=no"
             ],
             "cleanup": [
-              "/bin",
-              "/include",
-              "/lib/pkgconfig",
-              "/share"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-0.8.3.tar.xz",
-                    "sha256": "84754064c560fca6e1ab151dc64354fc235a5798f016b91b38c9617253a8cf11",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 14018,
-                        "stable-only": true,
-                        "url-template": "https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$version.tar.xz"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "gexiv2",
-            "modules": [
-                {
-                    "name": "exiv2",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DEXIV2_BUILD_EXIV2_COMMAND=OFF",
-                        "-DEXIV2_ENABLE_INIH=OFF",
-                        "-DEXIV2_ENABLE_VIDEO=OFF"
-                    ],
-                    "builddir": true,
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.2.tar.gz",
-                            "sha256": "543bead934135f20f438e0b6d8858c55c5fcb7ff80f5d1d55489965f1aad58b9",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 769,
-                                "stable-only": true,
-                                "url-template": "https://github.com/Exiv2/exiv2/archive/refs/tags/v$version.tar.gz"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "buildsystem": "meson",
-            "config-opts": [
-                "-Dintrospection=false",
-                "-Dpython3=false",
-                "-Dtools=false",
-                "-Dvapi=false"
-            ],
-            "cleanup": [
+                "/bin",
                 "/include",
+                "/info",
                 "/lib/pkgconfig"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.2.tar.xz",
-                    "sha256": "2a0c9cf48fbe8b3435008866ffd40b8eddb0667d2212b42396fdf688e93ce0be",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 1626,
-                        "stable-only": true,
-                        "url-template": "https://download.gnome.org/sources/gexiv2/$major.$minor/gexiv2-$version.tar.xz"
-                    }
-                }
-            ]
-        },
-        {
-            "name": "openexr",
-            "config-opts": [
-                "-DOPENEXR_BUILD_TOOLS=OFF",
-                "-DOPENEXR_BUILD_EXAMPLES=OFF",
-                "-DBUILD_TESTING=OFF"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
-            "builddir" : true,
-            "buildsystem" : "cmake-ninja",
-            "sources" : [
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/aalib/aalib-1.4rc5.tar.gz/9801095c42bba12edebd1902bcf0a990/aalib-1.4rc5.tar.gz",
+                    "sha256": "fbddda9230cf6ee2a4f5706b4b11e2190ae45f5eda1f0409dc4f99b35e0a70ee"
+                },
                 {
-                    "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.1.10.tar.gz",
-                    "sha256": "6e0fd3f0eb1cb907bd3593830ea2b3431b85f22a6f18f99f8cfa099fec70067d",
-                    "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 13289,
-                                "stable-only": true,
-                                "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
-                            }
-                }
-            ],
-            "modules": [
-                {
-                    "name" : "imath",
-                    "config-opts": [
-                        "-DBUILD_TESTING=OFF"
-                    ],
-                    "builddir" : true,
-                    "buildsystem" : "cmake-ninja",
-                    "cleanup": [
-                        "/include",
-                        "/lib/pkgconfig"
-                    ],
-                    "sources" : [
-                        {
-                            "type": "archive",
-                            "url" : "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v3.1.9.tar.gz",
-                            "sha256": "f1d8aacd46afed958babfced3190d2d3c8209b66da451f556abd6da94c165cf3",
-                            "x-checker-data": {
-                                        "type": "anitya",
-                                        "project-id": 223366,
-                                        "stable-only": true,
-                                        "url-template": "https://github.com/AcademySoftwareFoundation/Imath/archive/refs/tags/v$version.tar.gz"
-                                    }
-                        }
+                    "type": "shell",
+                    "commands": [
+                        "cp -p /usr/share/automake-*/config.{sub,guess} .",
+                        "sed -i 's/malloc.h/stdlib.h/' src/aados.c"
                     ]
-                }
-            ]
-        },
-        {
-            "name": "poppler",
-            "modules": [
+                },
                 {
-                    "name": "popplerdata",
-                    "buildsystem": "cmake-ninja",
-                    "builddir": true,
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz",
-                            "sha256": "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74",
-                            "x-checker-data": {
-                                "type": "anitya",
-                                "project-id": 3687,
-                                "stable-only": true,
-                                "url-template": "https://poppler.freedesktop.org/poppler-data-$version.tar.gz"
-                            }
-                        }
+                    "type": "patch",
+                    "paths": [
+                        "patches/0001-Apply-patch-for-MSYS2.patch",
+                        "patches/0003-aalib-m4-quote-macro-name.patch",
+                        "patches/0004-aalib-m4-use-correct-variable.patch"
                     ]
-                }
-            ],
-            "config-opts": [
-                "-DBUILD_GTK_TEST=OFF",
-                "-DBUILD_QT5_TESTS=OFF",
-                "-DBUILD_QT6_TESTS=OFF",
-                "-DBUILD_CPP_TESTS=OFF",
-                "-DBUILD_MANUAL_TESTS=OFF",
-                "-DENABLE_GOBJECT_INTROSPECTION=OFF",
-                "-DENABLE_UTILS=OFF",
-                "-DENABLE_CPP=OFF",
-                "-DENABLE_LIBOPENJPEG=openjpeg2",
-                "-DENABLE_BOOST=OFF",
-                "-DENABLE_NSS3=OFF",
-                "-DENABLE_QT5=OFF",
-                "-DENABLE_QT6=OFF"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ],
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-24.06.1.tar.xz",
-                    "sha256": "1e629e8732286c745fbc0b15a3ee591443fb37a2210856e7f3ec38a0fb93ab13",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 3686,
-                        "stable-only": true,
-                        "url-template": "https://poppler.freedesktop.org/poppler-$version.tar.xz"
-                    }
                 }
             ]
         },
