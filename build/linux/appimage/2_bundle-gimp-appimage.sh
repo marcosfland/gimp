@@ -328,6 +328,9 @@ echo "(INFO): making $appimage"
 "./$legacy_appimagetool" -n $APP_DIR $appimage &>> appimagetool.log # -u "zsync|https://download.gimp.org/gimp/v${gimp_app_version}/GIMP-latest-${ARCH}.AppImage.zsync"
 rm -r $APP_DIR
 
+chmod +x GIMP-${gimp_version}-${ARCH}.AppImage
+GIMP-${gimp_version}-${ARCH}.AppImage --appimage-version
+
 if [ "$GITLAB_CI" ]; then
   mkdir -p build/linux/appimage/_Output/
   mv GIMP*.AppImage build/linux/appimage/_Output/
